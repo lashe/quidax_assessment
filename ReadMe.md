@@ -18,19 +18,19 @@ the app should be up and running now.
 
 MY ASSUMPTIONS AND THOUGHT PROCCESS TO ATTEMPTING THE ASSESSMENT
 
-for the sake of a building a simple service, i assumed the users have already been registered and authenticated through out the accessing of the service. the idea was to make this as simple as possible in the shortest possible time with room for improvement. i may not have been able to complete this assessment the way i would have loved to but i tried my possible best to attempt every key functionality as astated in the document.
+for the sake of a building a simple service, i assumed the users have already been registered and authenticated through out the process of accessing the service. the idea was to make this as simple as possible in the shortest possible time with room for improvement. i may not have been able to complete this assessment the way i would have loved to but i tried my possible best to attempt every key functionality as astated in the document.
 
 used node.js(express) with mysql
 created endpoints and services that are also graphql adaptable.
+unit test for each service function
 drew a class diagram of the following tables:
 books
 cart
 likes
 ratings
 
-I was unable to cover the unit test as i had a time constraint as well as limited resources (power supply hasnt been steady and fuel scarcity did not make it any better).
-
-in terms of issues faced during the assessment, it would be my inability to access good power supply and the current situation of the country made it difficult to make use of the make use of the alternative available.
+in terms of issues faced during the assessment, it would be my inability to access good power supply and the current situation of the country made it difficult to make use of the make use of the alternative available. i did however encounter a database fetch error which was simply solved by executing this query in the database server query window:
+"SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY', ''));"
 
 I enjoyed working on this assessment a lot, almost got lost in it.
 

@@ -1,12 +1,9 @@
 var models = require("../../database/models/index");
-const { jsonSuccess, jsonFailure } = require("../../utilities");
+const { jsonFailure } = require("../../utilities");
 const { updateOrCreate } = require("../helpers/general");
 
 const getRating = async (book_id) => {
     await models.Books.findOne({where:{uuid: book_id}}).then(async (book)=>{
-        if(!book){
-            return jsonFailure(res, null, "book does not exist");
-        }
         let rating = await models.Ratings.findAll({
             where: { book_id: book_id},
             attributes: [[models.sequelize.fn('avg', models.sequelize.col('stars')),'rating']]
@@ -18,13 +15,16 @@ const getRating = async (book_id) => {
         // }
         // let averageRating = Math.ceil(totalRatings / ratings.count);
         return rating;
+    },
+    (error) =>{
+        return false
     })
 }
 
 const rateBook = async (book_id, user_id) => {
     await models.Books.findOne({where: {uuid: book_id}}).then( async (book)=>{
         if (!book){
-            return jsonFailure(res, null, "book does not exist");
+            return false;
         }
         await updateOrCreate(
             models.Ratings, 

@@ -1,5 +1,4 @@
 var models = require("../../database/models/index");
-const { jsonFailure } = require("../../utilities");
 
 const getCart = async (user_id) => {
     await models.Cart.findAll({where: {
@@ -15,7 +14,11 @@ const getCart = async (user_id) => {
 }
 
 const addToCart = async (book_id, user_id, item_count) =>{
-    
+    const book = await models.Books.findOne({
+        where:{ uuid: book_id}
+    })
+
+    if(book) {
         const cartItem = await models.Cart.findOne({where: {
             book_id: book_id,
             user_id: user_id,
@@ -47,7 +50,10 @@ const addToCart = async (book_id, user_id, item_count) =>{
             },
             (error)=>{
                 return false;
-            }); 
+            });
+    }
+    return false
+        
 }
 
 module.exports = {

@@ -13,6 +13,7 @@ const getAllBooks = async (page) => {
         limit,
   offset,
   order: [["id", "ASC"]],
+  group: ["genre"],
   include: [
     { 
         model: models.Ratings, as: "rating", 
@@ -24,9 +25,10 @@ const getAllBooks = async (page) => {
     },
     { 
         model: models.Likes, as: "likes", 
+        where:{status: 1},
         attributes: [
             [
-                models.sequelize.fn('COUNT', models.sequelize.col('star')),'likes'
+                models.sequelize.fn('COUNT', models.sequelize.col('status')),'likes'
             ]
         ] 
     },
@@ -50,7 +52,11 @@ const getFeaturedBooks = async () =>{
             where:{ tag: "featured"},
             limit
         }).then((books)=>{
+            console.log(books)
             return books;
+        },
+        (error)=>{
+            return error;
         });
 }
 
@@ -59,7 +65,6 @@ const getBookById = async (book_id) => {
         include: [
                     { 
                         model: models.Ratings, as: "rating", 
-                        where: { book_id: book_id},
                         attributes: [
                             [
                                 models.sequelize.fn('avg', models.sequelize.col('star')),'rating'
@@ -67,10 +72,11 @@ const getBookById = async (book_id) => {
                         ] 
                     },
                     { 
-                        model: models.Likes, as: "likes", 
+                        model: models.Likes, as: "likes",
+                        where:{status: 1},
                         attributes: [
                             [
-                                models.sequelize.fn('COUNT', models.sequelize.col('star')),'likes'
+                                models.sequelize.fn('COUNT', models.sequelize.col('status')),'likes'
                             ]
                         ] 
                     },
@@ -82,7 +88,7 @@ const getBookById = async (book_id) => {
 const likeBook = async (id, user_id) => {
     let book = await models.Books.findOne({where: {uuid: id}});
     if(!book){
-       return jsonFailure(res, null, "book not found", 400);
+       return false
     }
     await updateOrCreate(
         models.Likes, 
@@ -99,7 +105,7 @@ const likeBook = async (id, user_id) => {
 const unLikeBook = async (id, user_id) => {
     let book = await models.Books.findOne({where: {uuid: id}});
     if(!book){
-       return jsonFailure(res, null, "book not found", 400);
+       return false
     }
     await updateOrCreate(
         models.Likes, 

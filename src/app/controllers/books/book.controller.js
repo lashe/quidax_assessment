@@ -29,16 +29,24 @@ let controller = {
 
     // liking a particular book by user
     likeBook: async (req, res) => {
-        let { id, user_id } = req.params;
-        await likeBook(id, user_id)
-        return jsonSuccess(res, null, "book liked", 201);
+        let { user_id } = req.query;
+        let { book_id, } = req.params;
+        let like = await likeBook(book_id, user_id);
+        if(like === true){
+            return jsonSuccess(res, null, "book liked", 201);
+         }
+            return jsonFailure(res, null, "error liking book", 400);
     },
 
     // unlike a particular book by user
     unLikeBook: async (req, res) => {
-        let { id, user_id } = req.params;
-        await unLikeBook(id, user_id);
+        let { user_id } = req.query;
+        let { book_id, } = req.params;
+       let unlike =  await unLikeBook(book_id, user_id);
+       if(unlike === true){
         return jsonSuccess(res, null, "book unliked", 201);
+     }
+        return jsonFailure(res, null, "error unliking book", 400);
     },
 
     // get the number of likes for a particular book

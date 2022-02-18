@@ -10,7 +10,7 @@ const schema = buildSchema(`
     book(id: String!): Books,
     books(page: Int): [Books],
     featuredBooks: [Books],
-    getLikes(book_id: Sring!): Int,
+    getLikes(book_id: String!): Int,
     getCart(user_id: String): [Cart],
     search(query: String!): [Books]
   }
