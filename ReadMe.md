@@ -37,3 +37,5 @@ I enjoyed working on this assessment a lot, almost got lost in it.
 This is an aawesome way of getting to know what applicants are made of. I believe more time could be given to allow applicants attempt the assessment as well carry on with their other daily activities without sacrificing one for the other. adding a personal twist to the use case or asking to make the product be tailored to a personal goal or service they would want to achieve.
 
 Thank you for this opportunity.
+
+
